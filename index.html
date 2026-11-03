@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#06121a">
+<title>Perry Runner 3D · Aventura universitaria</title>
+<meta name="description" content="Perry Runner 3D: endless runner 3D ambientado en una ciudad inspirada en La Paz. Salta, deslízate, junta monedas y llega a tiempo a clase. Juega en tu navegador.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Perry Runner 3D · Aventura universitaria">
+<meta property="og:description" content="Corre, esquiva y llega a tiempo a clase. Juega online con Perry, el ornitorrinco universitario.">
+<meta property="og:image" content="assets/escena.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232bc4bd'/%3E%3Ctext x='32' y='45' font-size='36' text-anchor='middle'%3E%F0%9F%8E%A9%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="sr" href="#contenido">Saltar al contenido</a>
+<div id="progreso"></div><div id="luz"></div>
+<canvas id="confeti" aria-hidden="true"></canvas>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<!-- ============ NAVEGACIÓN ============ -->
+<header>
+  <div class="contenedor nav">
+    <a href="#inicio" class="logo" aria-label="Perry Runner 3D, inicio"><span class="ic">🎩</span><b>PERRY <span>RUNNER</span> <i>3D</i></b></a>
+    <nav id="menu" aria-label="Principal">
+      <ul>
+        <li><a class="enlace" href="#historia">Historia</a></li>
+        <li><a class="enlace" href="#personaje">Personaje</a></li>
+        <li><a class="enlace" href="#mecanicas">Mecánicas</a></li>
+        <li><a class="enlace" href="#datos">Datos</a></li>
+        <li><a class="enlace" href="#galeria">Galería</a></li>
+        <li><a class="enlace" href="#equipo">Equipo</a></li>
+        <li><a class="jugar" href="#jugar">▶ Jugar ahora</a></li>
+      </ul>
+    </nav>
+    <div class="tools">
+      <button class="ibtn" id="btnLogros" type="button" aria-label="Ver mis logros" title="Mis logros">🏅 <span id="logrosN">0/8</span></button>
+      <button class="ibtn" id="musica" type="button" aria-pressed="false" aria-label="Activar música" title="Música"><span class="eq"><i></i><i></i><i></i></span><span class="t">Música</span></button>
+      <button class="ibtn burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+<aside class="dots" id="dots" aria-label="Secciones"></aside>
+<button id="arriba" type="button" aria-label="Volver arriba">↑</button>
+
+<main id="contenido">
+<!-- ============ 1. HERO ============ -->
+<section id="inicio">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="orbe a"></div><div class="orbe b"></div>
+  <div class="contenedor hero">
+    <div>
+      <div><span class="genero">AVENTURA UNIVERSITARIA · ENDLESS RUNNER 3D</span></div>
+      <h1>PERRY<br><em>RUNNER</em> 3D</h1>
+      <p class="frase" data-texto="¡Corre, esquiva y llega a tiempo a clase!">¡Corre, esquiva y llega a tiempo a clase!</p>
+      <p class="sintesis">Perry va tarde a clases y la avenida está llena de obstáculos. Cada golpe cuesta una vida y el reloj no espera. Tu meta: acumular <b>1000 puntos</b> sin quedarte sin vidas y conseguir el <b>nuevo récord</b>.</p>
+      <div class="botones">
+        <a class="btn btn-p" href="#jugar" data-jugar>▶ JUGAR AHORA</a>
+        <a class="btn btn-s" href="#mecanicas">Aprender a jugar</a>
+      </div>
+      <div class="metricas" aria-label="Métricas rápidas">
+        <div class="metrica"><b data-cuenta="1000">1000</b><small>puntos para ganar</small></div>
+        <div class="metrica"><b>3 ♥</b><small>vidas iniciales</small></div>
+        <div class="metrica"><b data-cuenta="11">11</b><small>u/s velocidad inicial</small></div>
+        <div class="metrica"><div class="teclas"><kbd>↑</kbd><kbd>↓</kbd></div><small>saltar · deslizarse</small></div>
+      </div>
+    </div>
+    <div class="escena3d" id="escena3d">
+      <div class="esc-in" id="escIn">
+        <img src="assets/escena.jpg" alt="Perry corriendo por una avenida de La Paz con el Illimani y los teleféricos al fondo" fetchpriority="high">
+        <span class="pie-esc">Arte conceptual · La Paz</span>
+      </div>
+      <span class="chapa c1" data-prof="30">+25 ⭐ moneda</span><span class="chapa c2" data-prof="22">♥ ♥ ♥</span><span class="chapa c3" data-prof="38">11 u/s ⚡</span><span class="chapa c4" data-prof="18">↑ salta · ↓ desliza</span>
+      <span class="moneda3d" style="top:30%;right:8%" data-prof="50"></span><span class="moneda3d" style="top:52%;right:2%;width:28px;height:28px;animation-delay:-.8s" data-prof="60"></span>
+    </div>
+  </div>
+  <a class="scroll" href="#historia" aria-label="Bajar"></a>
+</section>
+
+<div class="cinta" aria-hidden="true"><div class="pista"><span>SALTA ↑</span><span class="m">★</span><span>DESLÍZATE ↓</span><span class="m">★</span><span>JUNTA MONEDAS</span><span class="m">★</span><span>ESQUIVA VALLAS</span><span class="m">★</span><span>LLEGA A CLASES</span><span class="m">★</span><span>SUPERA LOS 1000 PUNTOS</span><span class="m">★</span><span>SALTA ↑</span><span class="m">★</span><span>DESLÍZATE ↓</span><span class="m">★</span><span>JUNTA MONEDAS</span><span class="m">★</span><span>ESQUIVA VALLAS</span><span class="m">★</span><span>LLEGA A CLASES</span><span class="m">★</span><span>SUPERA LOS 1000 PUNTOS</span><span class="m">★</span></div></div>
+
+<!-- ============ 2. HISTORIA ============ -->
+<section id="historia" class="alt" data-nombre="Historia">
+  <div class="contenedor">
+    <span class="etiqueta">Capítulo 1</span>
+    <h2 class="titulo">Historia</h2>
+    <p class="bajada">Una aventura universitaria ambientada en una ciudad inspirada en La Paz, con Illimani y teleféricos al fondo.</p>
+    <div class="hist">
+      <div class="rev">
+        <h3>Contexto narrativo</h3>
+        <p style="margin-bottom:14px">El universo del juego es una ciudad universitaria viva: una gran avenida bordeada por edificios de ladrillo y cristal, con árboles, faroles y bancas. Es un lugar cotidiano que, a toda velocidad, se convierte en una pista llena de riesgos.</p>
+        <p>La partida comienza en un día cualquiera con un problema muy reconocible: <b style="color:var(--text)">se hizo tarde</b>. Obras, vallas y barras atraviesan la avenida y el tiempo no espera.</p>
+        <p class="cita">“Perry llega tarde a clases. ¡Corre por la avenida, esquiva los obstáculos y junta monedas!”</p>
+        <span class="mision">🎯 MISIÓN: LLEGAR A CLASES</span>
+      </div>
+      <div class="story rev" id="story" aria-label="Historia interactiva en cuatro pasos">
+        <div class="s-tabs" role="tablist">
+          <button role="tab" type="button" class="on" aria-selected="true"><i>1</i><span>Planteamiento</span></button>
+          <button role="tab" type="button" aria-selected="false"><i>2</i><span>Conflicto</span></button>
+          <button role="tab" type="button" aria-selected="false"><i>3</i><span>Motivación</span></button>
+          <button role="tab" type="button" aria-selected="false"><i>4</i><span>Resolución</span></button>
+        </div>
+        <div class="s-vista">
+          <img class="on" src="assets/escena.jpg" alt="Perry sale corriendo por la avenida" loading="lazy">
+          <img src="assets/galeria-1.jpg" alt="Perry esquivando un cono en la calle" loading="lazy">
+          <img src="assets/galeria-2.jpg" alt="Perry saltando un obstáculo" loading="lazy">
+          <img src="assets/galeria-4.jpg" alt="Pantalla de nuevo récord" loading="lazy">
+          <div class="s-texto" id="sTexto" aria-live="polite"><h3></h3><p></p></div>
+        </div>
+        <div class="s-nav"><button class="btn btn-s sm" type="button" id="sPrev">← Anterior</button><span id="sCont">1 / 4</span><button class="btn btn-s sm" type="button" id="sNext">Siguiente →</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. PERSONAJE ============ -->
+<section id="personaje" data-nombre="Personaje">
+  <div class="contenedor grid2">
+    <div class="retrato rev" id="retrato">
+      <div class="p-wrap" id="pWrap">
+        <img src="assets/personaje.png" alt="Perry, ornitorrinco universitario con sombrero marrón y chaqueta vino">
+        <button class="pin" type="button" style="left:50%;top:9%" data-i="0" aria-label="Sombrero">1</button>
+        <button class="pin" type="button" style="left:49%;top:29%" data-i="1" aria-label="Pico">2</button>
+        <button class="pin" type="button" style="left:34%;top:56%" data-i="2" aria-label="Chaqueta">3</button>
+        <button class="pin" type="button" style="left:82%;top:42%" data-i="3" aria-label="Cola">4</button>
+        <button class="pin" type="button" style="left:24%;top:93%" data-i="4" aria-label="Patas">5</button>
+      </div>
+      <div class="pin-info" id="pinInfo" aria-live="polite"><b>Explora a Perry</b>Toca los puntos numerados para descubrir sus rasgos.</div>
+    </div>
+    <div class="rev">
+      <span class="etiqueta">Capítulo 2</span>
+      <h2 class="titulo">Personaje principal</h2>
+      <p style="color:var(--mute)"><b style="color:var(--text)">Perry</b> es un ornitorrinco universitario, aventurero, valiente y decidido, con chaqueta vino y sombrero marrón. Su rol es el de corredor: no ataca ni usa objetos; su única herramienta es la precisión de sus movimientos.</p>
+      <div class="habs">
+        <button class="hab" type="button" data-a="saltar"><div class="ico">⤴</div><div><b>Salto <small style="color:var(--teal)">· toca para verlo</small></b><p>Supera las vallas bajas naranjas con un salto de hasta 2,6 m de altura.</p></div></button>
+        <button class="hab" type="button" data-a="agachar"><div class="ico">⤵</div><div><b>Deslizamiento <small style="color:var(--teal)">· toca para verlo</small></b><p>Se agacha 1,1 s para pasar bajo las barras altas; su colisión se reduce a la mitad.</p></div></button>
+        <button class="hab" type="button" data-a="morir"><div class="ico">✦</div><div><b>Invulnerabilidad breve <small style="color:var(--teal)">· toca para verlo</small></b><p>Tras un golpe parpadea y es invulnerable durante 1,2 s para recuperar el ritmo.</p></div></button>
+      </div>
+      <div class="anims" role="group" aria-label="Las 4 animaciones de Perry">
+        <span class="anims-t">Las 4 animaciones · pruébalas</span>
+        <button class="btn btn-s sm" type="button" data-a="correr">🏃 Correr</button><button class="btn btn-s sm" type="button" data-a="saltar">⬆️ Saltar</button><button class="btn btn-s sm" type="button" data-a="agachar">⬇️ Agacharse</button><button class="btn btn-s sm" type="button" data-a="morir">💫 Morir</button>
+      </div>
+      <div class="rasgos"><span>Sombrero de detective</span><span>Modelo 3D animado</span><span>Altura de 2 m en el juego</span><span>Estilo cartoon low poly</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. MECÁNICAS ============ -->
+<section id="mecanicas" class="alt" data-nombre="Mecánicas">
+  <div class="contenedor">
+    <span class="etiqueta">Capítulo 3</span>
+    <h2 class="titulo">Mecánicas y controles</h2>
+    <p class="bajada">Se juega solo con el teclado. Perry corre automáticamente: tú decides cuándo saltar y cuándo deslizarte. <b style="color:var(--text)">Prueba tu teclado ahora mismo</b>: las teclas de abajo se iluminan.</p>
+    <div class="grid3">
+      <div class="tarjeta control rev"><div class="teclas"><kbd data-key="ArrowUp">↑</kbd></div><h3>Saltar</h3><p>Flecha arriba. Para las vallas bajas <span class="chip n">naranja</span></p></div>
+      <div class="tarjeta control rev"><div class="teclas"><kbd data-key="ArrowDown">↓</kbd></div><h3>Deslizarse</h3><p>Flecha abajo. Para las barras altas <span class="chip a">azul</span></p></div>
+      <div class="tarjeta control rev"><div class="teclas"><kbd data-key="KeyR">R</kbd><kbd data-key="Enter">Enter</kbd></div><h3>Reiniciar</h3><p>Al terminar la partida, vuelve a empezar al instante.</p></div>
+    </div>
+
+    <div class="tarjeta entrena rev" id="entrena">
+      <div class="tr-cab"><div><h3>🏃 Perry en acción</h3><p>Demostración automática: Perry corre, salta las vallas naranjas y se desliza bajo las barras azules por sí solo.</p></div><button class="btn btn-s sm" id="drPause" type="button" aria-pressed="false">⏸ Pausar</button></div>
+      <div class="dr-wrap">
+        <div class="dr-stage" id="drStage" role="img" aria-label="Animación de Perry corriendo por una calle de la ciudad, saltando vallas y deslizándose bajo barras, de forma automática">
+          <canvas id="drCanvas">
+            <img src="assets/personaje.png" alt="Perry, el ornitorrinco corredor" style="height:100%;margin:auto">
+          </canvas>
+          <div class="dr-msg" id="drMsg" aria-hidden="true"></div>
+          <div class="dr-hud" aria-hidden="true"><span>🪙 <b id="drCoins">0</b></span><span>Superados <b id="drPass">0</b></span><span><b id="drSpeed">11,0</b> u/s</span></div>
+        </div>
+      </div>
+      <div class="dr-keys" aria-hidden="true">
+        <span id="drKUp"><kbd>↑</kbd> Saltar</span>
+        <span id="drKDn"><kbd>↓</kbd> Deslizarse</span>
+        <span class="dr-auto">⚙️ Automático</span>
+      </div>
+    </div>
+
+    <div class="reglas">
+      <div class="tarjeta rev">
+        <h3>Reglas del sistema</h3>
+        <ul>
+          <li><b>Obstáculos:</b> aparecen al azar de dos tipos, valla baja (saltar) y barra alta (deslizarse), cada 1,3 a 2,4 s.</li>
+          <li><b>Recolectables:</b> las monedas doradas aparecen en filas de tres y dan <b>+25 puntos</b> cada una.</li>
+          <li><b>Puntuación:</b> <b>10 puntos por segundo</b> sobrevivido más los puntos de las monedas.</li>
+          <li><b>Dificultad:</b> el mundo parte a 11 u/s y acelera 0,18 u/s cada segundo.</li>
+          <li><b>Justicia:</b> siempre dejan tiempo para aterrizar o levantarse antes del siguiente obstáculo.</li>
+        </ul>
+      </div>
+      <div style="display:grid;gap:20px">
+        <div class="tarjeta victoria rev"><h3>🏆 Condición de victoria</h3><p style="color:var(--mute)">Alcanzar <b style="color:var(--text)">1000 puntos</b> antes de perder las tres vidas. Aparece “¡NUEVO RÉCORD!” con tu puntuación y las monedas juntadas.</p></div>
+        <div class="tarjeta derrota rev"><h3>💥 Condición de derrota</h3><p style="color:var(--mute)">Chocar con un obstáculo cuando ya no quedan vidas. Aparece “JUEGO TERMINADO” con la puntuación final.</p></div>
+      </div>
+    </div>
+
+    <h3 class="sub">Obstáculos y objetos del camino</h3>
+    <p class="nota" style="margin:0 0 4px">Pasa el cursor (o toca) cada tarjeta para darle la vuelta.</p>
+    <div class="obst">
+      <button class="tarjeta ob rev" type="button"><div class="ob-in"><div class="ob-f"><span class="em">🚧</span><b>Valla baja</b><small>Se salta ↑</small></div><div class="ob-b">Obstáculo naranja y blanco. Mide unos 0,9 m: salta justo antes de llegar.</div></div></button>
+      <button class="tarjeta ob rev" type="button"><div class="ob-in"><div class="ob-f"><span class="em">🏗️</span><b>Barra alta</b><small>Se esquiva ↓</small></div><div class="ob-b">Barra azul sobre postes. Deslízate: tu colisión baja a la mitad durante 1,1 s.</div></div></button>
+      <button class="tarjeta ob rev" type="button"><div class="ob-in"><div class="ob-f"><span class="em">🚦</span><b>Conos</b><small>Decoración</small></div><div class="ob-b">Solo adornan el camino. No te quitan vidas.</div></div></button>
+      <button class="tarjeta ob rev" type="button"><div class="ob-in"><div class="ob-f"><span class="em">📦</span><b>Cajas</b><small>Decoración</small></div><div class="ob-b">Ambientan la ciudad. No son obstáculos.</div></div></button>
+      <button class="tarjeta ob rev mon" type="button"><div class="ob-in"><div class="ob-f"><span class="em">🪙</span><b>Monedas</b><small>+25 puntos</small></div><div class="ob-b">Vienen en filas de tres. ¡Arriesgarse tiene premio!</div></div></button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. DATOS ============ -->
+<section id="datos" data-nombre="Datos">
+  <div class="contenedor">
+    <span class="etiqueta">Capítulo 4</span>
+    <h2 class="titulo">Datos e infografía</h2>
+    <p class="bajada">Los parámetros de diseño del juego, tal como están configurados en Unity. Juega con ellos en el simulador.</p>
+    <div class="grid3">
+      <div class="tarjeta dato rev"><div class="ico">🏆</div><div class="valor" data-n="1000">0</div><div class="unidad">PUNTOS OBJETIVO</div><p>Puntuación necesaria para ganar la partida.</p></div>
+      <div class="tarjeta dato rev"><div class="ico">❤️</div><div class="valor" data-n="3">0</div><div class="unidad">VIDAS</div><p>Golpes que puedes recibir antes de perder.</p></div>
+      <div class="tarjeta dato rev"><div class="ico">🚧</div><div class="valor" data-n="2">0</div><div class="unidad">TIPOS DE OBSTÁCULO</div><p>Valla baja (saltar) y barra alta (deslizarse).</p></div>
+      <div class="tarjeta dato rev"><div class="ico">⚡</div><div class="valor" data-n="11">0</div><div class="unidad">u/s · VELOCIDAD INICIAL</div><p>Crece 0,18 u/s cada segundo.</p></div>
+      <div class="tarjeta dato rev"><div class="ico">🪙</div><div class="valor" data-n="25">0</div><div class="unidad">PUNTOS POR MONEDA</div><p>Premio extra por arriesgarse.</p></div>
+      <div class="tarjeta dato rev"><div class="ico">⏱️</div><div class="valor" data-n="10">0</div><div class="unidad">PUNTOS POR SEGUNDO</div><p>Se acumulan solo por sobrevivir.</p></div>
+    </div>
+
+    <div class="sim-wrap">
+      <div class="tarjeta sim rev" id="sim">
+        <h3>🎮 Simulador de partida</h3>
+        <p class="nota" style="margin-top:4px">Mueve los controles o presiona simular para ver cómo crecen la velocidad y los puntos.</p>
+        <label class="ctl" for="rt"><span>Tiempo sobrevivido</span><b id="o-t">0 s</b></label>
+        <input type="range" id="rt" min="0" max="100" step="0.5" value="0">
+        <label class="ctl" for="rc"><span>Monedas juntadas</span><b id="o-c">0</b></label>
+        <input type="range" id="rc" min="0" max="40" step="1" value="0">
+        <div class="sim-top">
+          <div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="gR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2bc4bd"/><stop offset="1" stop-color="#ff9d1f"/></linearGradient></defs><circle cx="60" cy="60" r="50" class="rt"/><circle id="anillo" cx="60" cy="60" r="50"/></svg><div class="rc"><b id="v-p">0%</b><small>del objetivo</small></div></div>
+          <div class="sim-grid">
+            <div class="tile"><small>VELOCIDAD</small><b id="v-v">11</b> u/s</div>
+            <div class="tile"><small>DISTANCIA</small><b id="v-d">0</b> u</div>
+            <div class="tile"><small>OBSTÁCULOS ≈</small><b id="v-o">0</b></div>
+            <div class="tile"><small>PUNTOS</small><b id="v-s">0</b></div>
+          </div>
+        </div>
+        <div class="pista2" id="pista2"><div class="fill" id="fill"></div><span class="mk" data-p="20" style="left:20%">⭐</span><span class="mk" data-p="40" style="left:40%">⭐</span><span class="mk" data-p="60" style="left:60%">⭐</span><span class="mk" data-p="80" style="left:80%">⭐</span><span class="meta">🏁</span></div>
+        <div class="estado" id="estado"></div>
+        <div class="acciones2"><button class="btn btn-p sm" id="bplay" type="button">▶ Simular partida</button><button class="btn btn-s sm" id="breset" type="button">↺ Reiniciar</button></div>
+      </div>
+      <div class="tarjeta rev">
+        <h3>📈 Velocidad del mundo en el tiempo</h3>
+        <svg id="graf2" viewBox="0 0 320 210" role="img" aria-label="Gráfica de velocidad contra tiempo"></svg>
+        <p class="nota">Pasa el mouse o desliza el dedo sobre la gráfica para moverte en el tiempo. Sin monedas, la victoria llega a los 100 s con el mundo a 29 u/s.</p>
+      </div>
+    </div>
+    <h3 class="sub">Parámetros de movimiento y reacción</h3>
+    <div class="gauges" id="gauges"></div>
+    <p class="nota">Cada anillo compara el valor contra un máximo de referencia de su misma escala.</p>
+    <div class="hechos"><span><b>3D</b> escenario</span><span><b>4</b> animaciones</span><span><b>∞</b> carrera continua</span><span><b>Low Poly</b> estilo cartoon</span></div>
+  </div>
+</section>
+
+<!-- ============ 6. GALERÍA ============ -->
+<section id="galeria" class="alt" data-nombre="Galería">
+  <div class="contenedor">
+    <span class="etiqueta">Capturas del juego</span>
+    <h2 class="titulo">Galería</h2>
+    <p class="bajada">Así se ve Perry Runner 3D en acción. Toca una imagen para ampliarla y navega con las flechas del teclado.</p>
+    <div class="filtros" role="group" aria-label="Filtrar galería">
+      <button class="btn btn-s sm on" type="button" data-f="todo">Todas</button>
+      <button class="btn btn-s sm" type="button" data-f="juego">En juego</button>
+      <button class="btn btn-s sm" type="button" data-f="pantallas">Pantallas</button>
+    </div>
+    <div class="galeria" id="galeria-g">
+      <figure data-c="juego" tabindex="0"><img src="assets/captura.png" alt="Captura real del juego con el marcador y la avenida" loading="lazy"><span class="lupa">⤢</span><figcaption>Juego real en Unity · puntos, vidas y velocidad en pantalla</figcaption></figure>
+      <figure data-c="juego" tabindex="0"><img src="assets/galeria-1.jpg" alt="Perry corriendo y esquivando un cono en la calle" loading="lazy"><span class="lupa">⤢</span><figcaption>Carrera en la ciudad</figcaption></figure>
+      <figure data-c="juego" tabindex="0"><img src="assets/galeria-2.jpg" alt="Perry saltando un obstáculo a mayor velocidad" loading="lazy"><span class="lupa">⤢</span><figcaption>Más velocidad, más reto</figcaption></figure>
+      <figure data-c="pantallas" tabindex="0"><img src="assets/galeria-3.jpg" alt="Pantalla de juego terminado con puntuación final" loading="lazy"><span class="lupa">⤢</span><figcaption>Pantalla de juego terminado</figcaption></figure>
+      <figure data-c="pantallas" tabindex="0"><img src="assets/galeria-4.jpg" alt="Pantalla de nuevo récord" loading="lazy"><span class="lupa">⤢</span><figcaption>¡Nuevo récord!</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. JUGAR ============ -->
+<section id="jugar" data-nombre="Jugar">
+  <div class="contenedor">
+    <span class="etiqueta">¡Tu turno!</span>
+    <h2 class="titulo">Jugar ahora</h2>
+    <p class="bajada">Perry llega tarde a clases. Pulsa jugar, haz clic dentro del juego y usa las flechas para llegar a <b style="color:var(--text)">1000 puntos</b> sin perder las tres vidas.</p>
+
+    <div class="cabina" id="cabina">
+      <div class="cab-luz" aria-hidden="true"></div>
+      <div class="cab-marco">
+        <div class="visor" id="visor">
+          <div class="tapa" id="tapa" role="button" tabindex="0" aria-label="Jugar Perry Runner 3D">
+            <span class="esq e1" aria-hidden="true"></span><span class="esq e2" aria-hidden="true"></span><span class="esq e3" aria-hidden="true"></span><span class="esq e4" aria-hidden="true"></span>
+            <div class="tapa-c">
+              <span class="tapa-tag"><i></i>Versión Unity · WebGL</span>
+              <b class="tapa-t">PERRY <br>RUNNER 3D</b>
+              <p class="tapa-s">Corre por la avenida, esquiva las vallas y llega a clases a tiempo.</p>
+              <span class="play"><i>▶</i>JUGAR</span>
+              <small class="tapa-msg" id="tapaMsg" aria-live="polite">Se carga al hacer clic. La primera vez puede tardar unos segundos.</small>
+            </div>
+          </div>
+          <iframe id="juego" title="Perry Runner 3D" data-src="juego/index.html" allow="fullscreen; autoplay"></iframe>
+        </div>
+      </div>
+      <div class="cab-barra">
+        <div class="cab-teclas" aria-label="Controles"><span><kbd>↑</kbd> Saltar</span><span><kbd>↓</kbd> Deslizarse</span><span><kbd>R</kbd> Reiniciar</span></div>
+        <div class="cab-acc">
+          <button class="btn btn-p sm" id="pantallaCompleta" type="button">⛶ Pantalla completa</button>
+          <a class="btn btn-s sm" href="juego/index.html" target="_blank" rel="noopener">Abrir en otra pestaña</a>
+        </div>
+      </div>
+    </div>
+    <p class="aviso aviso-tactil">Perry Runner 3D se controla con el teclado. En celular o tableta puede no responder: para jugar usa un computador.</p>
+
+    <div class="req">
+      <div class="tarjeta">
+        <h3>Requerimientos mínimos</h3>
+        <ul><li>Computador de escritorio o portátil con teclado</li><li>Chrome, Edge, Firefox o Safari actualizados con WebGL 2.0</li><li>4 GB de RAM y aceleración por hardware activada</li><li>Conexión estable (la primera carga descarga el juego)</li></ul>
+      </div>
+      <div class="tarjeta">
+        <h3>Instrucciones técnicas</h3>
+        <ul><li>Haz clic dentro del juego antes de usar las flechas</li><li>La primera carga puede tardar unos segundos</li><li>Si se ve lento, cierra otras pestañas y activa la aceleración por hardware</li><li>Si no carga, recarga con Ctrl + F5 o abre el juego en otra pestaña</li></ul>
+      </div>
+    </div>
+
+    <div class="faq" aria-label="Preguntas frecuentes">
+      <details><summary>¿Puedo jugar desde el celular?</summary><p>El juego está pensado para teclado (flechas ↑ ↓). En celular o tableta puede no responder; para la mejor experiencia usa un computador.</p></details>
+      <details><summary>¿Cómo consigo el nuevo récord?</summary><p>Llega a 1000 puntos sin quedarte sin vidas. Sobrevivir da 10 puntos por segundo y cada moneda suma 25. Con 40 monedas ya tendrías 1000 puntos; sin monedas necesitas sobrevivir 100 s.</p></details>
+      <details><summary>¿Qué pasa si choco?</summary><p>Pierdes una vida y Perry parpadea con 1,2 s de invulnerabilidad. Con 0 vidas aparece JUEGO TERMINADO.</p></details>
+      <details><summary>El juego no carga, ¿qué hago?</summary><p>Recarga la página con Ctrl + F5, activa la aceleración por hardware en tu navegador o abre el juego en otra pestaña con el botón de arriba.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. EQUIPO ============ -->
+<section id="equipo" class="alt" data-nombre="Equipo">
+  <div class="contenedor">
+    <span class="etiqueta">Detrás del juego</span>
+    <h2 class="titulo">Los Pato Locos</h2>
+    <p class="bajada">Proyecto de la asignatura Game Development · Unidad 2: Scripting y matemáticas para videojuegos.</p>
+    <div class="equipo">
+      <div class="tarjeta miembro rev"><div class="avatar">MV</div><div><h3>Mijhail Alvaro Vichini Fernandez</h3><p>Integrante · Los Pato Locos</p></div></div>
+      <div class="tarjeta miembro rev"><div class="avatar">MM</div><div><h3>Mario Macuchapi Villa</h3><p>Integrante · Los Pato Locos</p></div></div>
+    </div>
+    <div class="hechos"><span><b>Unity 6</b> motor</span><span><b>C#</b> scripts</span><span><b>Tripo</b> modelo 3D HD</span><span><b>GitHub Pages</b> publicación</span></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <p><b>PERRY RUNNER 3D</b> · Proyecto de Game Development · Universidad del Valle</p>
+    <p>Desarrollado por <b>Los Pato Locos</b> · Hecho con Unity, HTML, CSS y JavaScript</p>
+  </div>
+</footer>
+
+<!-- Modales -->
+<div class="modal" id="mLogros" role="dialog" aria-modal="true" aria-labelledby="mLogrosT">
+  <div class="modal-c"><button class="modal-x" type="button" data-cerrar aria-label="Cerrar">✕</button><h3 id="mLogrosT">🏅 Tus logros</h3><p class="nota">Explora el portal y juega para desbloquearlos. Se guardan en tu navegador.</p><div class="barra-l"><i id="barraLogros"></i></div><div class="logros" id="listaLogros"></div></div>
+</div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Galería ampliada"><button class="x" type="button" aria-label="Cerrar">✕</button><button class="pv" type="button" aria-label="Anterior">‹</button><img alt=""><button class="nx" type="button" aria-label="Siguiente">›</button><p></p></div>
+
+<script src="js/demo.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
